@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="text-center py-5">
+    <h1 class="display-5 fw-bold">AI-Powered Resume Screening System</h1>
+    <p class="lead text-muted">Upload resumes, enter job descriptions, and let NLP + Machine Learning rank your candidates automatically.</p>
+
+    <div class="row mt-5 g-4">
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <h5>1. Upload Resumes</h5>
+                <p class="text-muted">Upload candidate resumes in PDF or DOCX format.</p>
+                <a href="/upload" class="btn btn-primary mt-auto">Go to Upload</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <h5>2. Enter Job Description</h5>
+                <p class="text-muted">Provide the job description you're hiring for.</p>
+                <a href="/job-description" class="btn btn-primary mt-auto">Go to Job Description</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <h5>3. View Rankings</h5>
+                <p class="text-muted">See ranked candidates with skill gap analysis.</p>
+                <a href="/dashboard" class="btn btn-primary mt-auto">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

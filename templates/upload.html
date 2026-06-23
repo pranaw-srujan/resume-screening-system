@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Upload Resume{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Upload Resume</h2>
+
+<div class="card p-4 mb-4">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="resume" class="form-label">Choose a resume file (PDF or DOCX)</label>
+            <input type="file" name="resume" id="resume" accept=".pdf,.docx" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+
+{% if message %}
+    <div class="alert {% if 'failed' in message or 'Invalid' in message or 'No file' in message %}alert-danger{% else %}alert-success{% endif %}">
+        {{ message }}
+    </div>
+{% endif %}
+
+{% if candidate_data %}
+<div class="card p-4">
+    <h4>Extracted Candidate Data</h4>
+    <table class="table table-bordered mt-3">
+        <tr><th>Name</th><td>{{ candidate_data.name or "Not found" }}</td></tr>
+        <tr><th>Email</th><td>{{ candidate_data.email or "Not found" }}</td></tr>
+        <tr><th>Phone</th><td>{{ candidate_data.phone or "Not found" }}</td></tr>
+        <tr>
+            <th>Skills</th>
+            <td>
+                {% if candidate_data.skills %}
+                    {% for skill in candidate_data.skills %}
+                        <span class="badge-skill">{{ skill }}</span>
+                    {% endfor %}
+                {% else %}
+                    Not found
+                {% endif %}
+            </td>
+        </tr>
+        <tr><th>Education</th><td>{{ candidate_data.education or "Not found" }}</td></tr>
+        <tr><th>Experience</th><td>{{ candidate_data.experience or "Not found" }}</td></tr>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

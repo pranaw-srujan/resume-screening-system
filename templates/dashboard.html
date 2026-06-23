@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Recruiter Dashboard</h2>
+
+<div class="card p-4 mb-4">
+    <form action="/dashboard" method="POST" class="row g-2 align-items-end">
+        <div class="col-md-8">
+            <label for="jd_id" class="form-label">Select a Job Description</label>
+            <select name="jd_id" id="jd_id" class="form-select" required>
+                <option value="">-- Choose a job description --</option>
+                {% for jd in all_jds %}
+                    <option value="{{ jd.jd_id }}" {% if selected_jd and selected_jd.jd_id == jd.jd_id %}selected{% endif %}>
+                        {{ jd.title }} (ID: {{ jd.jd_id }})
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">Rank Candidates</button>
+        </div>
+    </form>
+</div>
+
+{% if selected_jd %}
+    <h4 class="mb-3">Results for: {{ selected_jd.title }}</h4>
+
+    {% if ranked_candidates %}
+        <div class="card p-3">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>TF-IDF Score</th>
+                        <th>Skill Match</th>
+                        <th>Matched Skills</th>
+                        <th>Missing Skills</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidate in ranked_candidates %}
+                    <tr>
+                        <td><strong>#{{ loop.index }}</strong></td>
+                        <td>{{ candidate.name or "Not found" }}</td>
+                        <td>{{ candidate.email or "Not found" }}</td>
+                        <td>{{ candidate.match_score }}</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     aria-valuenow="{{ candidate.skill_match_percentage }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"
+                                     data-width="{{ candidate.skill_match_percentage }}">
+                                    {{ candidate.skill_match_percentage }}%
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {% for skill in candidate.matched_skills %}
+                                <span class="badge-skill">{{ skill }}</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for skill in candidate.missing_skills %}
+                                <span class="badge-missing">{{ skill }}</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">No candidates found in the database.</p>
+    {% endif %}
+{% endif %}
+
+<script>
+    document.querySelectorAll('.progress-bar[data-width]').forEach(function(bar) {
+        bar.style.width = bar.getAttribute('data-width') + '%';
+    });
+</script>
+
+{% endblock %}
