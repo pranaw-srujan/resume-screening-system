@@ -6,6 +6,7 @@ def get_connection():
     """Create and return a new MySQL database connection."""
     return mysql.connector.connect(
         host=config.MYSQL_HOST,
+        port=int(config.MYSQL_PORT),
         user=config.MYSQL_USER,
         password=config.MYSQL_PASSWORD,
         database=config.MYSQL_DB
