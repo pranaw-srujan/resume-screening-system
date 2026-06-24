@@ -1,7 +1,7 @@
+import os
 os.makedirs('static/uploads', exist_ok=True)
 from dotenv import load_dotenv
 load_dotenv()
-import os
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from modules.extract_text import extract_text
