@@ -1,0 +1,6 @@
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=root
+MYSQL_DB=resume_screening_db
+SECRET_KEY=change_this_to_any_random_string

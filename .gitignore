@@ -9,12 +9,10 @@ __pycache__/
 static/uploads/*
 !static/uploads/.gitkeep
 
-# Environment / secrets
-config.py
-
 # VS Code
 .vscode/
 
 # OS files
 .DS_Store
 Thumbs.db
+.env
