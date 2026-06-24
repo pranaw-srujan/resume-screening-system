@@ -1,3 +1,4 @@
+os.makedirs('static/uploads', exist_ok=True)
 from dotenv import load_dotenv
 load_dotenv()
 import os
